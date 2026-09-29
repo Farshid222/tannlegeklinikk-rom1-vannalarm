@@ -1,1 +1,0 @@
-{"bme680_ok": false, "temperature_c": null, "source": "ESP32-C3_BME680_WATER_to_PicoW", "timestamp": "2026-06-20T13:09:41Z", "timezone": "Europe/Stockholm", "humidity_percent": null, "timestamp_sweden": "2026-06-20T15:09:41+02:00", "pressure_hpa": null, "gas_kohms": null, "water_ao": 4095, "water_do": 1, "water_detected": false, "timestamp_utc": "2026-06-20T13:09:41Z"}
