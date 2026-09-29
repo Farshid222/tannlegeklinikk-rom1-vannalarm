@@ -724,7 +724,7 @@
       const measuredAt = parseTime(data);
 
       if (!measuredAt) {
-        statusElement.textContent = "Ingen tid";
+        statusElement.textContent = "Mättid saknas";
         statusElement.className = "statusText bad";
         ageElement.textContent = "Senaste mätning: okänd";
         return;
@@ -734,7 +734,7 @@
         (Date.now() - measuredAt.getTime()) / 60000;
 
       if (ageMinutes < -2) {
-        statusElement.textContent = "Tidsfel";
+        statusElement.textContent = "Felaktig mättid";
         statusElement.className = "statusText warn";
         ageElement.textContent = "Senaste mätning: tidsfel";
         return;
@@ -744,7 +744,7 @@
         statusElement.textContent = normalText;
         statusElement.className = "statusText ok";
       } else {
-        statusElement.textContent = "Gammal mätning";
+        statusElement.textContent = "Mätningen är för gammal";
         statusElement.className = "statusText bad";
       }
 
