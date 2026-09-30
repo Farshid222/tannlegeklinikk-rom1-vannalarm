@@ -713,7 +713,8 @@
       data,
       statusElementId,
       ageElementId,
-      normalText
+      normalText,
+      useStoppedMeasurementText = false
     ) {
       const statusElement =
         document.getElementById(statusElementId);
@@ -744,8 +745,32 @@
         statusElement.textContent = normalText;
         statusElement.className = "statusText ok";
       } else {
-        statusElement.textContent = "Mätningen är för gammal";
+        statusElement.textContent =
+          useStoppedMeasurementText
+            ? "Stoppad mätning"
+            : "Mätningen är för gammal";
         statusElement.className = "statusText bad";
+      }
+
+      if (
+        useStoppedMeasurementText &&
+        ageMinutes > MAX_FRESH_AGE_MINUTES
+      ) {
+        const measurementTime =
+          measuredAt.toLocaleTimeString("sv-SE", {
+            timeZone: "Europe/Stockholm",
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23"
+          });
+
+        ageElement.textContent =
+          "Inga nya mätningar sedan " +
+          measurementTime +
+          " – senaste mätningen var för " +
+          Math.max(0, ageMinutes).toFixed(1) +
+          " minuter sedan";
+        return;
       }
 
       ageElement.textContent =
@@ -1013,7 +1038,8 @@
           data,
           "sensorStatus",
           "sensorAgeText",
-          "Normal"
+          "Normal",
+          true
         );
 
       } catch (error) {
