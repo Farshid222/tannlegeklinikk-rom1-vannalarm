@@ -392,7 +392,7 @@
     </div>
 
     <div class="card">
-      <div class="label">Ethernet</div>
+      <div class="label">Nätverksanslutning</div>
       <div id="ethernetStatus" class="value">
         --
       </div>
@@ -1139,21 +1139,37 @@
             "ethernetStatus"
           );
 
-        if (data.ethernet_link === true) {
-          ethernetElement.textContent = "UP";
+        const networkInterface =
+          data.network_interface ?? data.ethernet_interface;
+        const networkLink =
+          data.network_link ?? data.ethernet_link;
+        const networkIp =
+          data.network_ip ?? data.ethernet_ip;
+        const networkOperstate =
+          data.network_operstate ?? data.ethernet_operstate;
+        const interfaceName = networkInterface || "--";
+
+        if (networkLink === true) {
+          const connectionType = interfaceName.startsWith("wl")
+            ? "Wi-Fi"
+            : interfaceName.startsWith("eth")
+              ? "Ethernet"
+              : "Nätverksanslutning";
+          ethernetElement.textContent =
+            connectionType + " (" + interfaceName + ")";
           ethernetElement.className = "value ok";
         } else {
-          ethernetElement.textContent = "NED";
+          ethernetElement.textContent =
+            "Frånkopplad (" + interfaceName + ")";
           ethernetElement.className = "value bad";
         }
 
         setText(
           "ethernetDetails",
-          (data.ethernet_interface || "--") +
-          " | IP: " +
-          (data.ethernet_ip || "--") +
+          "IP: " +
+          (networkIp || "--") +
           " | Tillstånd: " +
-          (data.ethernet_operstate || "--")
+          (networkOperstate || "--")
         );
 
         updateReachability(
