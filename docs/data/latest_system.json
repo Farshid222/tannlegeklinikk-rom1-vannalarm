@@ -1,5 +1,5 @@
 {
-  "timestamp_sweden": "2026-10-03T12:48:21+02:00",
+  "timestamp_sweden": "2026-10-03T12:49:21+02:00",
   "throttled_raw": "throttled=0x0",
   "throttled_hex": "0x0",
   "undervoltage_now": false,
@@ -10,8 +10,8 @@
   "frequency_capped_has_occurred": false,
   "throttled_has_occurred": false,
   "temperature_limit_has_occurred": false,
-  "pi_temperature_c": 39.9,
-  "uptime_seconds": 48099.0,
+  "pi_temperature_c": 42.3,
+  "uptime_seconds": 48159.1,
   "boot_id": "6c4a96b2-89fa-47e3-9ea8-1fa99c6fa493",
   "ethernet_interface": "eth0",
   "ethernet_ip": null,
@@ -45,6 +45,6 @@
   "rx_errors": 0,
   "tx_errors": 0,
   "rx_dropped": 0,
-  "tx_dropped": 14423,
+  "tx_dropped": 14441,
   "system_status": "ethernet_down"
 }
