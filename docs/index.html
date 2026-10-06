@@ -525,78 +525,17 @@
     </div>
   </div>
 
-  <div class="section-header">
-    <div>
-      <h2>Ström- och nätverkshistorik</h2>
-
-      <p>
-        Kurvor från elektronik. Underspänningskurvan visar
-        registrerad underspänning i elektroniken, inte exakt nätspänning i volt.
-      </p>
-    </div>
-
-    <div id="systemHistoryStatus" class="section-status">
-      Hämtar systemhistorik...
-    </div>
-  </div>
-
-  <div class="chart-grid">
-    <div class="chart-card">
-      <div class="chart-title">Underspänning och prestandabegränsning</div>
-
-      <div class="chart-note">
-        0 = normal, 1 = aktiv varning.
-      </div>
-
-      <div class="chart-container">
-        <canvas id="powerChart"></canvas>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-title">Nätverksfördröjning</div>
-
-      <div class="chart-note">
-        Router, internet och GitHub i millisekunder.
-      </div>
-
-      <div class="chart-container">
-        <canvas id="latencyChart"></canvas>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-title">Elektroniktemperatur</div>
-
-      <div class="chart-container">
-        <canvas id="piTemperatureChart"></canvas>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-title">Paketförlust</div>
-
-      <div class="chart-note">
-        Procent paketförlust mot router, internet och GitHub.
-      </div>
-
-      <div class="chart-container">
-        <canvas id="packetLossChart"></canvas>
-      </div>
-    </div>
-  </div>
-
   <script>
     const LATEST_URL = "data/latest.json";
     const HISTORY_URL =
-    "data/history.json";
+      "data/history.json";
 
     const LATEST_SYSTEM_URL =
-     "data/latest_system.json";
+      "data/latest_system.json";
 
     const HISTORY_SYSTEM_URL =
       "data/history_system.json";
-    
+
     const REFRESH_INTERVAL_MS = 60000;
     const MAX_FRESH_AGE_MINUTES = 15;
     const MAX_HISTORY_POINTS = 300;
@@ -753,6 +692,7 @@
             : useOldSystemDataText
               ? "Systemdata är för gamla"
               : "Mätningen är för gammal";
+
         statusElement.className = "statusText bad";
       }
 
@@ -774,6 +714,7 @@
           " – senaste mätningen var för " +
           Math.max(0, ageMinutes).toFixed(1) +
           " minuter sedan";
+
         return;
       }
 
@@ -795,6 +736,7 @@
         ageElement.textContent =
           "Senaste systemmätning: " +
           measurementDateTime;
+
         return;
       }
 
@@ -1141,28 +1083,49 @@
           );
 
         const networkInterface =
-          data.network_interface ?? data.ethernet_interface;
+          data.network_interface ??
+          data.ethernet_interface;
+
         const networkLink =
-          data.network_link ?? data.ethernet_link;
+          data.network_link ??
+          data.ethernet_link;
+
         const networkIp =
-          data.network_ip ?? data.ethernet_ip;
+          data.network_ip ??
+          data.ethernet_ip;
+
         const networkOperstate =
-          data.network_operstate ?? data.ethernet_operstate;
-        const interfaceName = networkInterface || "--";
+          data.network_operstate ??
+          data.ethernet_operstate;
+
+        const interfaceName =
+          networkInterface || "--";
 
         if (networkLink === true) {
-          const connectionType = interfaceName.startsWith("wl")
-            ? "Wi-Fi"
-            : interfaceName.startsWith("eth")
-              ? "Ethernet"
-              : "Nätverksanslutning";
+          const connectionType =
+            interfaceName.startsWith("wl")
+              ? "Wi-Fi"
+              : interfaceName.startsWith("eth")
+                ? "Ethernet"
+                : "Nätverksanslutning";
+
           ethernetElement.textContent =
-            connectionType + " (" + interfaceName + ")";
-          ethernetElement.className = "value ok";
+            connectionType +
+            " (" +
+            interfaceName +
+            ")";
+
+          ethernetElement.className =
+            "value ok";
+
         } else {
           ethernetElement.textContent =
-            "Frånkopplad (" + interfaceName + ")";
-          ethernetElement.className = "value bad";
+            "Frånkopplad (" +
+            interfaceName +
+            ")";
+
+          ethernetElement.className =
+            "value bad";
         }
 
         setText(
@@ -1197,9 +1160,20 @@
           data.github_packet_loss_percent
         );
 
-        setText("rxErrors", data.rx_errors);
-        setText("rxDropped", data.rx_dropped);
-        setText("txErrors", data.tx_errors);
+        setText(
+          "rxErrors",
+          data.rx_errors
+        );
+
+        setText(
+          "rxDropped",
+          data.rx_dropped
+        );
+
+        setText(
+          "txErrors",
+          data.tx_errors
+        );
 
         setText(
           "systemTimeSweden",
@@ -1296,25 +1270,45 @@
 
           return {
             time: time,
-            label: formatChartTime(time),
+
+            label:
+              formatChartTime(time),
+
             temperature:
-              toNumber(row.temperature_c),
+              toNumber(
+                row.temperature_c
+              ),
+
             humidity:
-              toNumber(row.humidity_percent),
+              toNumber(
+                row.humidity_percent
+              ),
+
             pressure:
-              toNumber(row.pressure_hpa),
+              toNumber(
+                row.pressure_hpa
+              ),
+
             iaq:
-              toNumber(row.iaq),
+              toNumber(
+                row.iaq
+              ),
+
             waterDetected:
-              row.water_detected === true ? 1 : 0
+              row.water_detected === true
+                ? 1
+                : 0
           };
         })
+
         .filter(function (row) {
           return row !== null;
         })
+
         .sort(function (a, b) {
           return a.time - b.time;
         })
+
         .slice(-MAX_HISTORY_POINTS);
     }
 
@@ -1329,7 +1323,9 @@
 
           return {
             time: time,
-            label: formatChartTime(time),
+
+            label:
+              formatChartTime(time),
 
             undervoltage:
               row.undervoltage_now === true
@@ -1342,16 +1338,24 @@
                 : 0,
 
             piTemperature:
-              toNumber(row.pi_temperature_c),
+              toNumber(
+                row.pi_temperature_c
+              ),
 
             routerLatency:
-              toNumber(row.router_latency_ms),
+              toNumber(
+                row.router_latency_ms
+              ),
 
             internetLatency:
-              toNumber(row.internet_latency_ms),
+              toNumber(
+                row.internet_latency_ms
+              ),
 
             githubLatency:
-              toNumber(row.github_latency_ms),
+              toNumber(
+                row.github_latency_ms
+              ),
 
             routerLoss:
               toNumber(
@@ -1369,12 +1373,15 @@
               )
           };
         })
+
         .filter(function (row) {
           return row !== null;
         })
+
         .sort(function (a, b) {
           return a.time - b.time;
         })
+
         .slice(-MAX_HISTORY_POINTS);
     }
 
@@ -1403,7 +1410,9 @@
           tooltip: {
             callbacks: {
               label: function (context) {
-                if (context.parsed.y === null) {
+                if (
+                  context.parsed.y === null
+                ) {
                   return (
                     context.dataset.label +
                     ": Ingen mätning"
@@ -1445,6 +1454,7 @@
 
             ticks: {
               color: "#cbd5e1",
+
               stepSize:
                 suggestedMin === 0 &&
                 suggestedMax === 1
@@ -1471,9 +1481,14 @@
       suggestedMax
     ) {
       if (existingChart) {
-        existingChart.data.labels = labels;
-        existingChart.data.datasets = datasets;
+        existingChart.data.labels =
+          labels;
+
+        existingChart.data.datasets =
+          datasets;
+
         existingChart.update();
+
         return existingChart;
       }
 
@@ -1487,22 +1502,30 @@
             datasets: datasets
           },
 
-          options: chartOptions(
-            unit,
-            suggestedMin,
-            suggestedMax
-          )
+          options:
+            chartOptions(
+              unit,
+              suggestedMin,
+              suggestedMax
+            )
         }
       );
     }
 
-    function dataset(label, values) {
+    function dataset(
+      label,
+      values
+    ) {
       return {
         label: label,
         data: values,
         borderWidth: 2,
+
         pointRadius:
-          values.length > 100 ? 0 : 2,
+          values.length > 100
+            ? 0
+            : 2,
+
         pointHoverRadius: 5,
         tension: 0.2,
         spanGaps: true
@@ -1517,19 +1540,26 @@
 
       try {
         const json =
-          await fetchJson(HISTORY_URL);
+          await fetchJson(
+            HISTORY_URL
+          );
 
         const rows =
-          prepareSensorHistory(json);
+          prepareSensorHistory(
+            json
+          );
 
         if (rows.length === 0) {
           statusElement.textContent =
             "Ingen giltig sensorhistorik.";
+
           return;
         }
 
         const labels =
-          rows.map(row => row.label);
+          rows.map(
+            row => row.label
+          );
 
         temperatureChart =
           createOrUpdateChart(
@@ -1540,100 +1570,162 @@
               dataset(
                 "Temperatur",
                 rows.map(
-                  row => row.temperature
+                  row =>
+                    row.temperature
                 )
               )
             ],
             "°C"
           );
 
-    const validHumidityValues = rows
-      .map(row => row.humidity)
-      .filter(value => value !== null);
-    
-    let humidityMin = 0;
-    let humidityMax = 100;
-    
-    if (validHumidityValues.length > 0) {
-      const lowestHumidity =
-        Math.min(...validHumidityValues);
-    
-      const highestHumidity =
-        Math.max(...validHumidityValues);
-    
-      humidityMin = Math.max(
-        0,
-        Math.floor(lowestHumidity) - 2
-      );
-    
-      humidityMax = Math.min(
-        100,
-        Math.ceil(highestHumidity) + 2
-      );
-    
-      if (humidityMax - humidityMin < 10) {
-        const center =
-          (humidityMin + humidityMax) / 2;
-    
-        humidityMin = Math.max(
-          0,
-          Math.floor(center - 5)
-        );
-    
-        humidityMax = Math.min(
-          100,
-          Math.ceil(center + 5)
-        );
-      }
-    }
-    
-    humidityChart =
-      createOrUpdateChart(
-        humidityChart,
-        "humidityChart",
-        labels,
-        [
-          dataset(
-            "Luftfuktighet",
-            rows.map(
-              row => row.humidity
+        const validHumidityValues =
+          rows
+            .map(
+              row =>
+                row.humidity
             )
-          )
-        ],
-        "%",
-        humidityMin,
-        humidityMax
-      );
+            .filter(
+              value =>
+                value !== null
+            );
 
-        const validPressureValues = rows
-          .map(row => row.pressure)
-          .filter(value => value !== null);
+        let humidityMin = 0;
+        let humidityMax = 100;
+
+        if (
+          validHumidityValues.length > 0
+        ) {
+          const lowestHumidity =
+            Math.min(
+              ...validHumidityValues
+            );
+
+          const highestHumidity =
+            Math.max(
+              ...validHumidityValues
+            );
+
+          humidityMin =
+            Math.max(
+              0,
+              Math.floor(
+                lowestHumidity
+              ) - 2
+            );
+
+          humidityMax =
+            Math.min(
+              100,
+              Math.ceil(
+                highestHumidity
+              ) + 2
+            );
+
+          if (
+            humidityMax -
+            humidityMin <
+            10
+          ) {
+            const center =
+              (
+                humidityMin +
+                humidityMax
+              ) / 2;
+
+            humidityMin =
+              Math.max(
+                0,
+                Math.floor(
+                  center - 5
+                )
+              );
+
+            humidityMax =
+              Math.min(
+                100,
+                Math.ceil(
+                  center + 5
+                )
+              );
+          }
+        }
+
+        humidityChart =
+          createOrUpdateChart(
+            humidityChart,
+            "humidityChart",
+            labels,
+            [
+              dataset(
+                "Luftfuktighet",
+                rows.map(
+                  row =>
+                    row.humidity
+                )
+              )
+            ],
+            "%",
+            humidityMin,
+            humidityMax
+          );
+
+        const validPressureValues =
+          rows
+            .map(
+              row =>
+                row.pressure
+            )
+            .filter(
+              value =>
+                value !== null
+            );
 
         let pressureMin;
         let pressureMax;
 
-        if (validPressureValues.length > 0) {
+        if (
+          validPressureValues.length > 0
+        ) {
           const lowestPressure =
-            Math.min(...validPressureValues);
+            Math.min(
+              ...validPressureValues
+            );
 
           const highestPressure =
-            Math.max(...validPressureValues);
+            Math.max(
+              ...validPressureValues
+            );
 
           pressureMin =
-            Math.floor(lowestPressure) - 2;
+            Math.floor(
+              lowestPressure
+            ) - 2;
 
           pressureMax =
-            Math.ceil(highestPressure) + 2;
+            Math.ceil(
+              highestPressure
+            ) + 2;
 
-          if (pressureMax - pressureMin < 10) {
+          if (
+            pressureMax -
+            pressureMin <
+            10
+          ) {
             const center =
-              (pressureMin + pressureMax) / 2;
+              (
+                pressureMin +
+                pressureMax
+              ) / 2;
 
             pressureMin =
-              Math.floor(center - 5);
+              Math.floor(
+                center - 5
+              );
 
             pressureMax =
-              Math.ceil(center + 5);
+              Math.ceil(
+                center + 5
+              );
           }
         }
 
@@ -1646,7 +1738,8 @@
               dataset(
                 "Lufttryck",
                 rows.map(
-                  row => row.pressure
+                  row =>
+                    row.pressure
                 )
               )
             ],
@@ -1655,71 +1748,104 @@
             pressureMax
           );
 
-        const validIaqValues = rows
-          .map(row => row.iaq)
-          .filter(value => value !== null);
-        
+        const validIaqValues =
+          rows
+            .map(
+              row =>
+                row.iaq
+            )
+            .filter(
+              value =>
+                value !== null
+            );
+
         let iaqMin = 0;
         let iaqMax = 100;
-        
-        if (validIaqValues.length > 0) {
-          const lowestIaq = Math.min(...validIaqValues);
-          const highestIaq = Math.max(...validIaqValues);
-        
-          iaqMin = Math.max(
-            0,
-            Math.floor(lowestIaq / 10) * 10 - 10
-          );
-        
-          iaqMax = Math.min(
-            500,
-            Math.ceil(highestIaq / 10) * 10 + 10
-          );
-        
-          if (iaqMax - iaqMin < 40) {
-            iaqMax = Math.min(500, iaqMin + 40);
+
+        if (
+          validIaqValues.length > 0
+        ) {
+          const lowestIaq =
+            Math.min(
+              ...validIaqValues
+            );
+
+          const highestIaq =
+            Math.max(
+              ...validIaqValues
+            );
+
+          iaqMin =
+            Math.max(
+              0,
+              Math.floor(
+                lowestIaq / 10
+              ) * 10 - 10
+            );
+
+          iaqMax =
+            Math.min(
+              500,
+              Math.ceil(
+                highestIaq / 10
+              ) * 10 + 10
+            );
+
+          if (
+            iaqMax -
+            iaqMin <
+            40
+          ) {
+            iaqMax =
+              Math.min(
+                500,
+                iaqMin + 40
+              );
           }
         }
-        
+
         iaqChart =
-  createOrUpdateChart(
-    iaqChart,
-    "iaqChart",
-    labels,
-    [
-      dataset(
-        "Luftkvalitet",
-        rows.map(
-          row => row.iaq
-        )
-      )
-    ],
-    "IAQ",
-    iaqMin,
-    iaqMax
-  );
+          createOrUpdateChart(
+            iaqChart,
+            "iaqChart",
+            labels,
+            [
+              dataset(
+                "Luftkvalitet",
+                rows.map(
+                  row =>
+                    row.iaq
+                )
+              )
+            ],
+            "IAQ",
+            iaqMin,
+            iaqMax
+          );
 
-waterChart =
-  createOrUpdateChart(
-    waterChart,
-    "waterChart",
-    labels,
-    [
-      dataset(
-        "Vattenläckage",
-        rows.map(
-          row => row.waterDetected
-        )
-      )
-    ],
-    "",
-    0,
-    1
-  );
+        waterChart =
+          createOrUpdateChart(
+            waterChart,
+            "waterChart",
+            labels,
+            [
+              dataset(
+                "Vattenläckage",
+                rows.map(
+                  row =>
+                    row.waterDetected
+                )
+              )
+            ],
+            "",
+            0,
+            1
+          );
 
-statusElement.textContent =
-  rows.length +
-  " sensormätningar visas.";
+        statusElement.textContent =
+          rows.length +
+          " sensormätningar visas.";
+
       } catch (error) {
         console.error(
           "Fel vid sensorhistorik:",
@@ -1744,16 +1870,21 @@ statusElement.textContent =
           );
 
         const rows =
-          prepareSystemHistory(json);
+          prepareSystemHistory(
+            json
+          );
 
         if (rows.length === 0) {
           statusElement.textContent =
             "Ingen giltig systemhistorik.";
+
           return;
         }
 
         const labels =
-          rows.map(row => row.label);
+          rows.map(
+            row => row.label
+          );
 
         powerChart =
           createOrUpdateChart(
@@ -1764,14 +1895,16 @@ statusElement.textContent =
               dataset(
                 "Underspänning",
                 rows.map(
-                  row => row.undervoltage
+                  row =>
+                    row.undervoltage
                 )
               ),
 
               dataset(
                 "Throttling",
                 rows.map(
-                  row => row.throttled
+                  row =>
+                    row.throttled
                 )
               )
             ],
@@ -1789,21 +1922,24 @@ statusElement.textContent =
               dataset(
                 "Router",
                 rows.map(
-                  row => row.routerLatency
+                  row =>
+                    row.routerLatency
                 )
               ),
 
               dataset(
                 "Internet",
                 rows.map(
-                  row => row.internetLatency
+                  row =>
+                    row.internetLatency
                 )
               ),
 
               dataset(
                 "GitHub",
                 rows.map(
-                  row => row.githubLatency
+                  row =>
+                    row.githubLatency
                 )
               )
             ],
@@ -1820,7 +1956,8 @@ statusElement.textContent =
               dataset(
                 "Elektroniktemperatur",
                 rows.map(
-                  row => row.piTemperature
+                  row =>
+                    row.piTemperature
                 )
               )
             ],
@@ -1836,21 +1973,24 @@ statusElement.textContent =
               dataset(
                 "Router",
                 rows.map(
-                  row => row.routerLoss
+                  row =>
+                    row.routerLoss
                 )
               ),
 
               dataset(
                 "Internet",
                 rows.map(
-                  row => row.internetLoss
+                  row =>
+                    row.internetLoss
                 )
               ),
 
               dataset(
                 "GitHub",
                 rows.map(
-                  row => row.githubLoss
+                  row =>
+                    row.githubLoss
                 )
               )
             ],
@@ -1880,8 +2020,7 @@ statusElement.textContent =
       await Promise.all([
         loadLatestData(manual),
         loadLatestSystemData(manual),
-        loadSensorHistory(),
-        loadSystemHistory()
+        loadSensorHistory()
       ]);
     }
 
