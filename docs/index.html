@@ -230,6 +230,7 @@
 </head>
 
 <body>
+
   <div class="top">
     <div>
       <h1>Tandläkarklinik rum 1</h1>
@@ -273,6 +274,7 @@
     </div>
   </div>
 
+
   <div class="section-header">
     <div>
       <h2>Sensorer och vattenlarm</h2>
@@ -281,6 +283,7 @@
   </div>
 
   <div class="grid">
+
     <div class="card">
       <div class="label">Temperatur</div>
       <div class="value">
@@ -345,7 +348,9 @@
         --
       </div>
     </div>
+
   </div>
+
 
   <div class="section-header">
     <div>
@@ -362,30 +367,12 @@
     </div>
   </div>
 
+
   <div class="grid">
-    <div class="card">
-      <div class="label">Aktiv underspänning</div>
-      <div id="undervoltageNow" class="value">
-        --
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="label">Aktiv prestandabegränsning</div>
-      <div id="throttledNow" class="value">
-        --
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="label">Underspänning har inträffat</div>
-      <div id="undervoltageOccurred" class="value">
-        --
-      </div>
-    </div>
 
     <div class="card">
       <div class="label">Elektroniktemperatur</div>
+
       <div class="value">
         <span id="piTemperature">--</span> °C
       </div>
@@ -393,6 +380,7 @@
 
     <div class="card">
       <div class="label">Nätverksanslutning</div>
+
       <div id="ethernetStatus" class="value">
         --
       </div>
@@ -404,6 +392,7 @@
 
     <div class="card">
       <div class="label">Router</div>
+
       <div id="routerStatus" class="value">
         --
       </div>
@@ -415,6 +404,7 @@
 
     <div class="card">
       <div class="label">Internet</div>
+
       <div id="internetStatus" class="value">
         --
       </div>
@@ -426,6 +416,7 @@
 
     <div class="card">
       <div class="label">GitHub</div>
+
       <div id="githubStatus" class="value">
         --
       </div>
@@ -436,37 +427,15 @@
     </div>
 
     <div class="card">
-      <div class="label">Mottagningsfel</div>
-      <div id="rxErrors" class="value">
-        --
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="label">Tappade mottagna paket</div>
-      <div id="rxDropped" class="value">
-        --
-      </div>
-
-      <div class="note">
-        Samlad räknare sedan elektroniken startades.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="label">Sända fel</div>
-      <div id="txErrors" class="value">
-        --
-      </div>
-    </div>
-
-    <div class="card">
       <div class="label">Systemmätningens tid</div>
+
       <div id="systemTimeSweden" class="smallValue">
         --
       </div>
     </div>
+
   </div>
+
 
   <div class="section-header">
     <div>
@@ -479,9 +448,13 @@
     </div>
   </div>
 
+
   <div class="chart-grid">
+
     <div class="chart-card">
-      <div class="chart-title">Temperatur °C</div>
+      <div class="chart-title">
+        Temperatur °C
+      </div>
 
       <div class="chart-container">
         <canvas id="temperatureChart"></canvas>
@@ -489,7 +462,9 @@
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Luftfuktighet %</div>
+      <div class="chart-title">
+        Luftfuktighet %
+      </div>
 
       <div class="chart-container">
         <canvas id="humidityChart"></canvas>
@@ -497,7 +472,9 @@
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Lufttryck hPa</div>
+      <div class="chart-title">
+        Lufttryck hPa
+      </div>
 
       <div class="chart-container">
         <canvas id="pressureChart"></canvas>
@@ -505,7 +482,9 @@
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Luftkvalitet IAQ</div>
+      <div class="chart-title">
+        Luftkvalitet IAQ
+      </div>
 
       <div class="chart-container">
         <canvas id="iaqChart"></canvas>
@@ -513,7 +492,9 @@
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Vattenläckagehistorik</div>
+      <div class="chart-title">
+        Vattenläckagehistorik
+      </div>
 
       <div class="chart-note">
         0 = torrt, 1 = vattenläckage.
@@ -523,10 +504,15 @@
         <canvas id="waterChart"></canvas>
       </div>
     </div>
+
   </div>
 
+
   <script>
-    const LATEST_URL = "data/latest.json";
+
+    const LATEST_URL =
+      "data/latest.json";
+
     const HISTORY_URL =
       "data/history.json";
 
@@ -536,9 +522,16 @@
     const HISTORY_SYSTEM_URL =
       "data/history_system.json";
 
-    const REFRESH_INTERVAL_MS = 60000;
-    const MAX_FRESH_AGE_MINUTES = 15;
-    const MAX_HISTORY_POINTS = 300;
+
+    const REFRESH_INTERVAL_MS =
+      60000;
+
+    const MAX_FRESH_AGE_MINUTES =
+      15;
+
+    const MAX_HISTORY_POINTS =
+      300;
+
 
     let temperatureChart = null;
     let humidityChart = null;
@@ -551,8 +544,11 @@
     let piTemperatureChart = null;
     let packetLossChart = null;
 
+
     function setText(id, value) {
-      const element = document.getElementById(id);
+
+      const element =
+        document.getElementById(id);
 
       if (!element) {
         return;
@@ -566,7 +562,9 @@
           : value;
     }
 
+
     function toNumber(value) {
+
       if (
         value === null ||
         value === undefined ||
@@ -575,22 +573,31 @@
         return null;
       }
 
-      const number = Number(value);
+      const number =
+        Number(value);
 
       return Number.isFinite(number)
         ? number
         : null;
     }
 
-    function formatNumber(value, digits = 2) {
-      const number = toNumber(value);
+
+    function formatNumber(
+      value,
+      digits = 2
+    ) {
+
+      const number =
+        toNumber(value);
 
       return number === null
         ? "--"
         : number.toFixed(digits);
     }
 
+
     function getTimestampText(data) {
+
       return (
         data.timestamp_sweden ||
         data.timestamp_utc ||
@@ -601,28 +608,40 @@
       );
     }
 
+
     function parseTime(data) {
-      const timeText = getTimestampText(data);
+
+      const timeText =
+        getTimestampText(data);
 
       if (!timeText) {
         return null;
       }
 
-      const parsed = new Date(timeText);
+      const parsed =
+        new Date(timeText);
 
-      return Number.isNaN(parsed.getTime())
+      return Number.isNaN(
+        parsed.getTime()
+      )
         ? null
         : parsed;
     }
 
+
     function formatChartTime(date) {
-      return date.toLocaleString("sv-SE", {
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
+
+      return date.toLocaleString(
+        "sv-SE",
+        {
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
     }
+
 
     function setBooleanStatus(
       elementId,
@@ -630,24 +649,44 @@
       activeText,
       normalText
     ) {
+
       const element =
-        document.getElementById(elementId);
+        document.getElementById(
+          elementId
+        );
 
       if (!element) {
         return;
       }
 
       if (active === true) {
-        element.textContent = activeText;
-        element.className = "value bad";
-      } else if (active === false) {
-        element.textContent = normalText;
-        element.className = "value ok";
+
+        element.textContent =
+          activeText;
+
+        element.className =
+          "value bad";
+
+      } else if (
+        active === false
+      ) {
+
+        element.textContent =
+          normalText;
+
+        element.className =
+          "value ok";
+
       } else {
-        element.textContent = "Okänt";
-        element.className = "value warn";
+
+        element.textContent =
+          "Okänt";
+
+        element.className =
+          "value warn";
       }
     }
+
 
     function updateAgeStatus(
       data,
@@ -657,35 +696,70 @@
       useStoppedMeasurementText = false,
       useOldSystemDataText = false
     ) {
+
       const statusElement =
-        document.getElementById(statusElementId);
+        document.getElementById(
+          statusElementId
+        );
 
       const ageElement =
-        document.getElementById(ageElementId);
+        document.getElementById(
+          ageElementId
+        );
 
-      const measuredAt = parseTime(data);
+      const measuredAt =
+        parseTime(data);
 
       if (!measuredAt) {
-        statusElement.textContent = "Mättid saknas";
-        statusElement.className = "statusText bad";
-        ageElement.textContent = "Senaste mätning: okänd";
+
+        statusElement.textContent =
+          "Mättid saknas";
+
+        statusElement.className =
+          "statusText bad";
+
+        ageElement.textContent =
+          "Senaste mätning: okänd";
+
         return;
       }
+
 
       const ageMinutes =
-        (Date.now() - measuredAt.getTime()) / 60000;
+        (
+          Date.now() -
+          measuredAt.getTime()
+        ) / 60000;
+
 
       if (ageMinutes < -2) {
-        statusElement.textContent = "Felaktig mättid";
-        statusElement.className = "statusText warn";
-        ageElement.textContent = "Senaste mätning: tidsfel";
+
+        statusElement.textContent =
+          "Felaktig mättid";
+
+        statusElement.className =
+          "statusText warn";
+
+        ageElement.textContent =
+          "Senaste mätning: tidsfel";
+
         return;
       }
 
-      if (ageMinutes <= MAX_FRESH_AGE_MINUTES) {
-        statusElement.textContent = normalText;
-        statusElement.className = "statusText ok";
+
+      if (
+        ageMinutes <=
+        MAX_FRESH_AGE_MINUTES
+      ) {
+
+        statusElement.textContent =
+          normalText;
+
+        statusElement.className =
+          "statusText ok";
+
       } else {
+
         statusElement.textContent =
           useStoppedMeasurementText
             ? "Stoppad mätning"
@@ -693,45 +767,81 @@
               ? "Systemdata är för gamla"
               : "Mätningen är för gammal";
 
-        statusElement.className = "statusText bad";
+        statusElement.className =
+          "statusText bad";
       }
+
 
       if (
         useStoppedMeasurementText &&
-        ageMinutes > MAX_FRESH_AGE_MINUTES
+        ageMinutes >
+          MAX_FRESH_AGE_MINUTES
       ) {
+
         const measurementTime =
-          measuredAt.toLocaleTimeString("sv-SE", {
-            timeZone: "Europe/Stockholm",
-            hour: "2-digit",
-            minute: "2-digit",
-            hourCycle: "h23"
-          });
+          measuredAt.toLocaleTimeString(
+            "sv-SE",
+            {
+              timeZone:
+                "Europe/Stockholm",
+
+              hour:
+                "2-digit",
+
+              minute:
+                "2-digit",
+
+              hourCycle:
+                "h23"
+            }
+          );
 
         ageElement.textContent =
           "Inga nya mätningar sedan " +
           measurementTime +
           " – senaste mätningen var för " +
-          Math.max(0, ageMinutes).toFixed(1) +
+          Math.max(
+            0,
+            ageMinutes
+          ).toFixed(1) +
           " minuter sedan";
 
         return;
       }
 
+
       if (
         useOldSystemDataText &&
-        ageMinutes > MAX_FRESH_AGE_MINUTES
+        ageMinutes >
+          MAX_FRESH_AGE_MINUTES
       ) {
+
         const measurementDateTime =
-          measuredAt.toLocaleString("sv-SE", {
-            timeZone: "Europe/Stockholm",
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            hourCycle: "h23"
-          });
+          measuredAt.toLocaleString(
+            "sv-SE",
+            {
+              timeZone:
+                "Europe/Stockholm",
+
+              year:
+                "numeric",
+
+              month:
+                "2-digit",
+
+              day:
+                "2-digit",
+
+              hour:
+                "2-digit",
+
+              minute:
+                "2-digit",
+
+              hourCycle:
+                "h23"
+            }
+          );
 
         ageElement.textContent =
           "Senaste systemmätning: " +
@@ -740,25 +850,44 @@
         return;
       }
 
+
       ageElement.textContent =
         "Senaste mätning: " +
-        Math.max(0, ageMinutes).toFixed(1) +
+        Math.max(
+          0,
+          ageMinutes
+        ).toFixed(1) +
         " minuter sedan";
     }
 
-    function getIaqClassification(value) {
-      const numericValue = Number(value);
 
-      if (!Number.isFinite(numericValue)) {
+    function getIaqClassification(value) {
+
+      const numericValue =
+        Number(value);
+
+      if (
+        !Number.isFinite(
+          numericValue
+        )
+      ) {
         return null;
       }
 
-      const iaq = Math.max(
-        0,
-        Math.min(500, Math.round(numericValue))
-      );
+      const iaq =
+        Math.max(
+          0,
+          Math.min(
+            500,
+            Math.round(
+              numericValue
+            )
+          )
+        );
+
 
       if (iaq <= 50) {
+
         return {
           value: iaq,
           text: "Bra",
@@ -768,7 +897,9 @@
         };
       }
 
+
       if (iaq <= 100) {
+
         return {
           value: iaq,
           text: "Genomsnittlig",
@@ -778,7 +909,9 @@
         };
       }
 
+
       if (iaq <= 150) {
+
         return {
           value: iaq,
           text: "Lite dålig",
@@ -788,7 +921,9 @@
         };
       }
 
+
       if (iaq <= 200) {
+
         return {
           value: iaq,
           text: "Dålig",
@@ -798,7 +933,9 @@
         };
       }
 
+
       if (iaq <= 300) {
+
         return {
           value: iaq,
           text: "Sämre",
@@ -807,6 +944,7 @@
           foreground: "#ffffff"
         };
       }
+
 
       return {
         value: iaq,
@@ -817,24 +955,39 @@
       };
     }
 
+
     function updateAirQuality(value) {
+
       const card =
-        document.getElementById("airQualityCard");
+        document.getElementById(
+          "airQualityCard"
+        );
 
       const valueElement =
-        document.getElementById("iaqValue");
+        document.getElementById(
+          "iaqValue"
+        );
 
       const descriptionElement =
-        document.getElementById("iaqDescription");
+        document.getElementById(
+          "iaqDescription"
+        );
 
       const rangeElement =
-        document.getElementById("iaqRange");
+        document.getElementById(
+          "iaqRange"
+        );
 
       const status =
-        getIaqClassification(value);
+        getIaqClassification(
+          value
+        );
+
 
       if (!status) {
-        valueElement.textContent = "--";
+
+        valueElement.textContent =
+          "--";
 
         descriptionElement.textContent =
           "Ingen IAQ-mätning";
@@ -853,6 +1006,7 @@
 
         return;
       }
+
 
       valueElement.textContent =
         status.value;
@@ -873,37 +1027,82 @@
         status.background;
     }
 
-    function updateWaterStatus(data) {
-      const element =
-        document.getElementById("waterStatus");
 
-      if (data.water_detected === true) {
-        element.textContent = "LÄCKAGE";
-        element.className = "value bad";
-      } else if (data.water_detected === false) {
-        element.textContent = "Torrt";
-        element.className = "value ok";
+    function updateWaterStatus(data) {
+
+      const element =
+        document.getElementById(
+          "waterStatus"
+        );
+
+      if (
+        data.water_detected === true
+      ) {
+
+        element.textContent =
+          "LÄCKAGE";
+
+        element.className =
+          "value bad";
+
+      } else if (
+        data.water_detected === false
+      ) {
+
+        element.textContent =
+          "Torrt";
+
+        element.className =
+          "value ok";
+
       } else {
-        element.textContent = "Okänt";
-        element.className = "value warn";
+
+        element.textContent =
+          "Okänt";
+
+        element.className =
+          "value warn";
       }
     }
+
 
     function updateAirSensorStatus(data) {
-      const element =
-        document.getElementById("airStatus");
 
-      if (data.bme680_ok === true) {
-        element.textContent = "OK";
-        element.className = "value ok";
-      } else if (data.bme680_ok === false) {
-        element.textContent = "Fel";
-        element.className = "value bad";
+      const element =
+        document.getElementById(
+          "airStatus"
+        );
+
+      if (
+        data.bme680_ok === true
+      ) {
+
+        element.textContent =
+          "OK";
+
+        element.className =
+          "value ok";
+
+      } else if (
+        data.bme680_ok === false
+      ) {
+
+        element.textContent =
+          "Fel";
+
+        element.className =
+          "value bad";
+
       } else {
-        element.textContent = "Okänt";
-        element.className = "value warn";
+
+        element.textContent =
+          "Okänt";
+
+        element.className =
+          "value warn";
       }
     }
+
 
     function updateReachability(
       statusId,
@@ -912,39 +1111,73 @@
       latency,
       packetLoss
     ) {
-      const statusElement =
-        document.getElementById(statusId);
 
-      if (reachable === true) {
-        statusElement.textContent = "OK";
-        statusElement.className = "value ok";
-      } else if (reachable === false) {
-        statusElement.textContent = "Ingen kontakt";
-        statusElement.className = "value bad";
+      const statusElement =
+        document.getElementById(
+          statusId
+        );
+
+      if (
+        reachable === true
+      ) {
+
+        statusElement.textContent =
+          "OK";
+
+        statusElement.className =
+          "value ok";
+
+      } else if (
+        reachable === false
+      ) {
+
+        statusElement.textContent =
+          "Ingen kontakt";
+
+        statusElement.className =
+          "value bad";
+
       } else {
-        statusElement.textContent = "Okänt";
-        statusElement.className = "value warn";
+
+        statusElement.textContent =
+          "Okänt";
+
+        statusElement.className =
+          "value warn";
       }
+
 
       setText(
         detailsId,
         "Svarstid: " +
-        formatNumber(latency, 3) +
+        formatNumber(
+          latency,
+          3
+        ) +
         " ms | Paketförlust: " +
-        formatNumber(packetLoss, 1) +
+        formatNumber(
+          packetLoss,
+          1
+        ) +
         " %"
       );
     }
 
+
     async function fetchJson(url) {
-      const response = await fetch(
-        url + "?cacheBust=" + Date.now(),
-        {
-          cache: "no-store"
-        }
-      );
+
+      const response =
+        await fetch(
+          url +
+          "?cacheBust=" +
+          Date.now(),
+          {
+            cache: "no-store"
+          }
+        );
 
       if (!response.ok) {
+
         throw new Error(
           "HTTP " +
           response.status +
@@ -956,12 +1189,20 @@
       return response.json();
     }
 
-    async function loadLatestData(manual = false) {
+
+    async function loadLatestData(
+      manual = false
+    ) {
+
       const statusElement =
-        document.getElementById("sensorStatus");
+        document.getElementById(
+          "sensorStatus"
+        );
 
       try {
+
         if (manual) {
+
           statusElement.textContent =
             "Uppdaterar...";
 
@@ -969,37 +1210,70 @@
             "statusText warn";
         }
 
+
         const data =
-          await fetchJson(LATEST_URL);
+          await fetchJson(
+            LATEST_URL
+          );
+
 
         setText(
           "temperature",
-          formatNumber(data.temperature_c, 2)
+          formatNumber(
+            data.temperature_c,
+            2
+          )
         );
+
 
         setText(
           "humidity",
-          formatNumber(data.humidity_percent, 2)
+          formatNumber(
+            data.humidity_percent,
+            2
+          )
         );
+
 
         setText(
           "pressure",
-          formatNumber(data.pressure_hpa, 2)
+          formatNumber(
+            data.pressure_hpa,
+            2
+          )
         );
 
-        updateAirQuality(data.iaq);
-        updateWaterStatus(data);
-        updateAirSensorStatus(data);
+
+        updateAirQuality(
+          data.iaq
+        );
+
+
+        updateWaterStatus(
+          data
+        );
+
+
+        updateAirSensorStatus(
+          data
+        );
+
 
         setText(
           "timeSweden",
-          getTimestampText(data)
+          getTimestampText(
+            data
+          )
         );
+
 
         setText(
           "frontendTime",
-          new Date().toLocaleString("sv-SE")
+          new Date().toLocaleString(
+            "sv-SE"
+          )
         );
+
 
         updateAgeStatus(
           data,
@@ -1009,7 +1283,9 @@
           true
         );
 
+
       } catch (error) {
+
         console.error(
           "Fel vid hämtning av sensordata:",
           error
@@ -1028,16 +1304,20 @@
       }
     }
 
+
     async function loadLatestSystemData(
       manual = false
     ) {
+
       const statusElement =
         document.getElementById(
           "piSystemStatus"
         );
 
       try {
+
         if (manual) {
+
           statusElement.textContent =
             "Uppdaterar...";
 
@@ -1045,8 +1325,12 @@
             "statusText warn";
         }
 
+
         const data =
-          await fetchJson(LATEST_SYSTEM_URL);
+          await fetchJson(
+            LATEST_SYSTEM_URL
+          );
+
 
         setBooleanStatus(
           "undervoltageNow",
@@ -1055,6 +1339,7 @@
           "Nej"
         );
 
+
         setBooleanStatus(
           "throttledNow",
           data.throttled_now,
@@ -1062,12 +1347,14 @@
           "Nej"
         );
 
+
         setBooleanStatus(
           "undervoltageOccurred",
           data.undervoltage_has_occurred,
           "JA",
           "Nej"
         );
+
 
         setText(
           "piTemperature",
@@ -1077,37 +1364,55 @@
           )
         );
 
+
         const ethernetElement =
           document.getElementById(
             "ethernetStatus"
           );
 
+
         const networkInterface =
           data.network_interface ??
           data.ethernet_interface;
+
 
         const networkLink =
           data.network_link ??
           data.ethernet_link;
 
+
         const networkIp =
           data.network_ip ??
           data.ethernet_ip;
+
 
         const networkOperstate =
           data.network_operstate ??
           data.ethernet_operstate;
 
-        const interfaceName =
-          networkInterface || "--";
 
-        if (networkLink === true) {
+        const interfaceName =
+          networkInterface ||
+          "--";
+
+
+        if (
+          networkLink === true
+        ) {
+
           const connectionType =
-            interfaceName.startsWith("wl")
+            interfaceName.startsWith(
+              "wl"
+            )
               ? "Wi-Fi"
-              : interfaceName.startsWith("eth")
+
+              : interfaceName.startsWith(
+                  "eth"
+                )
                 ? "Ethernet"
+
                 : "Nätverksanslutning";
+
 
           ethernetElement.textContent =
             connectionType +
@@ -1115,26 +1420,37 @@
             interfaceName +
             ")";
 
+
           ethernetElement.className =
             "value ok";
 
         } else {
+
           ethernetElement.textContent =
             "Frånkopplad (" +
             interfaceName +
             ")";
 
+
           ethernetElement.className =
             "value bad";
         }
 
+
         setText(
           "ethernetDetails",
           "IP: " +
-          (networkIp || "--") +
+          (
+            networkIp ||
+            "--"
+          ) +
           " | Tillstånd: " +
-          (networkOperstate || "--")
+          (
+            networkOperstate ||
+            "--"
+          )
         );
+
 
         updateReachability(
           "routerStatus",
@@ -1144,6 +1460,7 @@
           data.router_packet_loss_percent
         );
 
+
         updateReachability(
           "internetStatus",
           "internetDetails",
@@ -1151,6 +1468,7 @@
           data.internet_latency_ms,
           data.internet_packet_loss_percent
         );
+
 
         updateReachability(
           "githubStatus",
@@ -1160,44 +1478,60 @@
           data.github_packet_loss_percent
         );
 
+
         setText(
           "rxErrors",
           data.rx_errors
         );
+
 
         setText(
           "rxDropped",
           data.rx_dropped
         );
 
+
         setText(
           "txErrors",
           data.tx_errors
         );
 
+
         setText(
           "systemTimeSweden",
-          getTimestampText(data)
+          getTimestampText(
+            data
+          )
         );
+
 
         setText(
           "latestSystemStatus",
           "Status: " +
-          (data.system_status || "okänd") +
+          (
+            data.system_status ||
+            "okänd"
+          ) +
           " | " +
-          (data.throttled_hex || "--")
+          (
+            data.throttled_hex ||
+            "--"
+          )
         );
+
 
         updateAgeStatus(
           data,
           "piSystemStatus",
           "systemAgeText",
-          data.system_status === "normal"
-            ? "Normal"
-            : data.system_status,
+          data.system_status ===
+            "normal"
+              ? "Normal"
+              : data.system_status,
           false,
           true
         );
+
 
         if (
           data.undervoltage_now === true ||
@@ -1207,11 +1541,14 @@
           data.internet_reachable === false ||
           data.github_reachable === false
         ) {
+
           statusElement.className =
             "statusText bad";
         }
 
+
       } catch (error) {
+
         console.error(
           "Fel vid hämtning av systemdata:",
           error
@@ -1230,17 +1567,27 @@
       }
     }
 
-    function extractHistoryArray(json) {
-      if (Array.isArray(json)) {
+
+    function extractHistoryArray(
+      json
+    ) {
+
+      if (
+        Array.isArray(
+          json
+        )
+      ) {
         return json;
       }
 
       if (
         !json ||
-        typeof json !== "object"
+        typeof json !==
+          "object"
       ) {
         return [];
       }
+
 
       const possibleKeys = [
         "history",
@@ -1250,8 +1597,17 @@
         "items"
       ];
 
-      for (const key of possibleKeys) {
-        if (Array.isArray(json[key])) {
+
+      for (
+        const key
+        of possibleKeys
+      ) {
+
+        if (
+          Array.isArray(
+            json[key]
+          )
+        ) {
           return json[key];
         }
       }
@@ -1259,20 +1615,32 @@
       return [];
     }
 
-    function prepareSensorHistory(json) {
-      return extractHistoryArray(json)
+
+    function prepareSensorHistory(
+      json
+    ) {
+
+      return extractHistoryArray(
+        json
+      )
+
         .map(function (row) {
-          const time = parseTime(row);
+
+          const time =
+            parseTime(row);
 
           if (!time) {
             return null;
           }
 
           return {
+
             time: time,
 
             label:
-              formatChartTime(time),
+              formatChartTime(
+                time
+              ),
 
             temperature:
               toNumber(
@@ -1295,45 +1663,67 @@
               ),
 
             waterDetected:
-              row.water_detected === true
+              row.water_detected ===
+                true
                 ? 1
                 : 0
           };
         })
 
-        .filter(function (row) {
-          return row !== null;
-        })
+        .filter(
+          function (row) {
+            return row !== null;
+          }
+        )
 
-        .sort(function (a, b) {
-          return a.time - b.time;
-        })
+        .sort(
+          function (a, b) {
+            return a.time -
+              b.time;
+          }
+        )
 
-        .slice(-MAX_HISTORY_POINTS);
+        .slice(
+          -MAX_HISTORY_POINTS
+        );
     }
 
-    function prepareSystemHistory(json) {
-      return extractHistoryArray(json)
+
+    function prepareSystemHistory(
+      json
+    ) {
+
+      return extractHistoryArray(
+        json
+      )
+
         .map(function (row) {
-          const time = parseTime(row);
+
+          const time =
+            parseTime(row);
 
           if (!time) {
             return null;
           }
 
           return {
+
             time: time,
 
             label:
-              formatChartTime(time),
+              formatChartTime(
+                time
+              ),
 
             undervoltage:
-              row.undervoltage_now === true
+              row.undervoltage_now ===
+                true
                 ? 1
                 : 0,
 
             throttled:
-              row.throttled_now === true
+              row.throttled_now ===
+                true
                 ? 1
                 : 0,
 
@@ -1374,23 +1764,33 @@
           };
         })
 
-        .filter(function (row) {
-          return row !== null;
-        })
+        .filter(
+          function (row) {
+            return row !== null;
+          }
+        )
 
-        .sort(function (a, b) {
-          return a.time - b.time;
-        })
+        .sort(
+          function (a, b) {
+            return a.time -
+              b.time;
+          }
+        )
 
-        .slice(-MAX_HISTORY_POINTS);
+        .slice(
+          -MAX_HISTORY_POINTS
+        );
     }
+
 
     function chartOptions(
       unit,
       suggestedMin,
       suggestedMax
     ) {
+
       return {
+
         responsive: true,
         maintainAspectRatio: false,
         animation: false,
@@ -1401,51 +1801,72 @@
         },
 
         plugins: {
+
           legend: {
+
             labels: {
-              color: "#f8fafc"
+              color:
+                "#f8fafc"
             }
           },
 
           tooltip: {
+
             callbacks: {
-              label: function (context) {
-                if (
-                  context.parsed.y === null
+
+              label:
+                function (
+                  context
                 ) {
+
+                  if (
+                    context.parsed.y ===
+                    null
+                  ) {
+
+                    return (
+                      context.dataset.label +
+                      ": Ingen mätning"
+                    );
+                  }
+
                   return (
                     context.dataset.label +
-                    ": Ingen mätning"
+                    ": " +
+                    context.parsed.y +
+                    " " +
+                    unit
                   );
                 }
-
-                return (
-                  context.dataset.label +
-                  ": " +
-                  context.parsed.y +
-                  " " +
-                  unit
-                );
-              }
             }
           }
         },
 
         scales: {
+
           x: {
+
             ticks: {
-              color: "#cbd5e1",
-              maxTicksLimit: 8,
-              maxRotation: 0
+
+              color:
+                "#cbd5e1",
+
+              maxTicksLimit:
+                8,
+
+              maxRotation:
+                0
             },
 
             grid: {
+
               color:
                 "rgba(148,163,184,0.12)"
             }
           },
 
           y: {
+
             suggestedMin:
               suggestedMin,
 
@@ -1453,7 +1874,9 @@
               suggestedMax,
 
             ticks: {
-              color: "#cbd5e1",
+
+              color:
+                "#cbd5e1",
 
               stepSize:
                 suggestedMin === 0 &&
@@ -1463,6 +1886,7 @@
             },
 
             grid: {
+
               color:
                 "rgba(148,163,184,0.15)"
             }
@@ -1470,6 +1894,7 @@
         }
       };
     }
+
 
     function createOrUpdateChart(
       existingChart,
@@ -1480,7 +1905,11 @@
       suggestedMin,
       suggestedMax
     ) {
-      if (existingChart) {
+
+      if (
+        existingChart
+      ) {
+
         existingChart.data.labels =
           labels;
 
@@ -1492,14 +1921,23 @@
         return existingChart;
       }
 
+
       return new Chart(
-        document.getElementById(canvasId),
+        document.getElementById(
+          canvasId
+        ),
         {
-          type: "line",
+
+          type:
+            "line",
 
           data: {
-            labels: labels,
-            datasets: datasets
+
+            labels:
+              labels,
+
+            datasets:
+              datasets
           },
 
           options:
@@ -1512,33 +1950,49 @@
       );
     }
 
+
     function dataset(
       label,
       values
     ) {
+
       return {
-        label: label,
-        data: values,
-        borderWidth: 2,
+
+        label:
+          label,
+
+        data:
+          values,
+
+        borderWidth:
+          2,
 
         pointRadius:
           values.length > 100
             ? 0
             : 2,
 
-        pointHoverRadius: 5,
-        tension: 0.2,
-        spanGaps: true
+        pointHoverRadius:
+          5,
+
+        tension:
+          0.2,
+
+        spanGaps:
+          true
       };
     }
 
+
     async function loadSensorHistory() {
+
       const statusElement =
         document.getElementById(
           "historyStatus"
         );
 
       try {
+
         const json =
           await fetchJson(
             HISTORY_URL
@@ -1549,17 +2003,24 @@
             json
           );
 
-        if (rows.length === 0) {
+
+        if (
+          rows.length === 0
+        ) {
+
           statusElement.textContent =
             "Ingen giltig sensorhistorik.";
 
           return;
         }
 
+
         const labels =
           rows.map(
-            row => row.label
+            row =>
+              row.label
           );
+
 
         temperatureChart =
           createOrUpdateChart(
@@ -1578,6 +2039,7 @@
             "°C"
           );
 
+
         const validHumidityValues =
           rows
             .map(
@@ -1589,12 +2051,16 @@
                 value !== null
             );
 
+
         let humidityMin = 0;
         let humidityMax = 100;
 
+
         if (
-          validHumidityValues.length > 0
+          validHumidityValues.length >
+          0
         ) {
+
           const lowestHumidity =
             Math.min(
               ...validHumidityValues
@@ -1605,6 +2071,7 @@
               ...validHumidityValues
             );
 
+
           humidityMin =
             Math.max(
               0,
@@ -1612,6 +2079,7 @@
                 lowestHumidity
               ) - 2
             );
+
 
           humidityMax =
             Math.min(
@@ -1621,16 +2089,19 @@
               ) + 2
             );
 
+
           if (
             humidityMax -
             humidityMin <
             10
           ) {
+
             const center =
               (
                 humidityMin +
                 humidityMax
               ) / 2;
+
 
             humidityMin =
               Math.max(
@@ -1639,6 +2110,7 @@
                   center - 5
                 )
               );
+
 
             humidityMax =
               Math.min(
@@ -1649,6 +2121,7 @@
               );
           }
         }
+
 
         humidityChart =
           createOrUpdateChart(
@@ -1669,6 +2142,7 @@
             humidityMax
           );
 
+
         const validPressureValues =
           rows
             .map(
@@ -1680,12 +2154,16 @@
                 value !== null
             );
 
+
         let pressureMin;
         let pressureMax;
 
+
         if (
-          validPressureValues.length > 0
+          validPressureValues.length >
+          0
         ) {
+
           const lowestPressure =
             Math.min(
               ...validPressureValues
@@ -1696,31 +2174,37 @@
               ...validPressureValues
             );
 
+
           pressureMin =
             Math.floor(
               lowestPressure
             ) - 2;
+
 
           pressureMax =
             Math.ceil(
               highestPressure
             ) + 2;
 
+
           if (
             pressureMax -
             pressureMin <
             10
           ) {
+
             const center =
               (
                 pressureMin +
                 pressureMax
               ) / 2;
 
+
             pressureMin =
               Math.floor(
                 center - 5
               );
+
 
             pressureMax =
               Math.ceil(
@@ -1728,6 +2212,7 @@
               );
           }
         }
+
 
         pressureChart =
           createOrUpdateChart(
@@ -1748,6 +2233,7 @@
             pressureMax
           );
 
+
         const validIaqValues =
           rows
             .map(
@@ -1759,12 +2245,16 @@
                 value !== null
             );
 
+
         let iaqMin = 0;
         let iaqMax = 100;
 
+
         if (
-          validIaqValues.length > 0
+          validIaqValues.length >
+          0
         ) {
+
           const lowestIaq =
             Math.min(
               ...validIaqValues
@@ -1775,27 +2265,35 @@
               ...validIaqValues
             );
 
+
           iaqMin =
             Math.max(
               0,
               Math.floor(
                 lowestIaq / 10
-              ) * 10 - 10
+              ) *
+                10 -
+                10
             );
+
 
           iaqMax =
             Math.min(
               500,
               Math.ceil(
                 highestIaq / 10
-              ) * 10 + 10
+              ) *
+                10 +
+                10
             );
+
 
           if (
             iaqMax -
             iaqMin <
             40
           ) {
+
             iaqMax =
               Math.min(
                 500,
@@ -1803,6 +2301,7 @@
               );
           }
         }
+
 
         iaqChart =
           createOrUpdateChart(
@@ -1823,6 +2322,7 @@
             iaqMax
           );
 
+
         waterChart =
           createOrUpdateChart(
             waterChart,
@@ -1842,11 +2342,14 @@
             1
           );
 
+
         statusElement.textContent =
           rows.length +
           " sensormätningar visas.";
 
+
       } catch (error) {
+
         console.error(
           "Fel vid sensorhistorik:",
           error
@@ -1857,13 +2360,16 @@
       }
     }
 
+
     async function loadSystemHistory() {
+
       const statusElement =
         document.getElementById(
           "systemHistoryStatus"
         );
 
       try {
+
         const json =
           await fetchJson(
             HISTORY_SYSTEM_URL
@@ -1874,17 +2380,24 @@
             json
           );
 
-        if (rows.length === 0) {
+
+        if (
+          rows.length === 0
+        ) {
+
           statusElement.textContent =
             "Ingen giltig systemhistorik.";
 
           return;
         }
 
+
         const labels =
           rows.map(
-            row => row.label
+            row =>
+              row.label
           );
+
 
         powerChart =
           createOrUpdateChart(
@@ -1912,6 +2425,7 @@
             0,
             1
           );
+
 
         latencyChart =
           createOrUpdateChart(
@@ -1947,6 +2461,7 @@
             0
           );
 
+
         piTemperatureChart =
           createOrUpdateChart(
             piTemperatureChart,
@@ -1963,6 +2478,7 @@
             ],
             "°C"
           );
+
 
         packetLossChart =
           createOrUpdateChart(
@@ -1999,11 +2515,14 @@
             100
           );
 
+
         statusElement.textContent =
           rows.length +
           " systemmätningar visas.";
 
+
       } catch (error) {
+
         console.error(
           "Fel vid systemhistorik:",
           error
@@ -2014,21 +2533,40 @@
       }
     }
 
+
     async function loadAllData(
       manual = false
     ) {
+
       await Promise.all([
-        loadLatestData(manual),
-        loadLatestSystemData(manual),
+
+        loadLatestData(
+          manual
+        ),
+
+        loadLatestSystemData(
+          manual
+        ),
+
         loadSensorHistory()
+
       ]);
     }
 
+
     loadAllData(false);
 
-    setInterval(function () {
-      loadAllData(false);
-    }, REFRESH_INTERVAL_MS);
+
+    setInterval(
+      function () {
+
+        loadAllData(false);
+
+      },
+      REFRESH_INTERVAL_MS
+    );
+
   </script>
+
 </body>
 </html>
