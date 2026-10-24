@@ -307,6 +307,13 @@
     </div>
 
     <div class="card">
+      <div class="label">CO₂-ekvivalent</div>
+      <div class="value">
+        <span id="co2Equivalent">--</span> ppm
+      </div>
+    </div>
+
+    <div class="card">
       <div class="label">Vattenläckage</div>
       <div id="waterStatus" class="value">
         --
@@ -380,6 +387,14 @@
     </div>
 
     <div class="chart-card">
+      <div class="chart-title">CO₂-ekvivalent ppm</div>
+
+      <div class="chart-container">
+        <canvas id="co2Chart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
       <div class="chart-title">Vattenläckagehistorik</div>
 
       <div class="chart-note">
@@ -411,6 +426,7 @@
     let humidityChart = null;
     let pressureChart = null;
     let iaqChart = null;
+    let co2Chart = null;
     let waterChart = null;
 
     let powerChart = null;
@@ -850,6 +866,16 @@
           formatNumber(data.pressure_hpa, 2)
         );
 
+        setText(
+          "co2Equivalent",
+          formatNumber(
+            data.co2_equivalent_ppm ??
+            data.co2_ppm ??
+            data.co2,
+            2
+          )
+        );
+
         updateAirQuality(data.iaq);
         updateWaterStatus(data);
         updateAirSensorStatus(data);
@@ -1110,6 +1136,12 @@
               toNumber(row.pressure_hpa),
             iaq:
               toNumber(row.iaq),
+            co2:
+              toNumber(
+                row.co2_equivalent_ppm ??
+                row.co2_ppm ??
+                row.co2
+              ),
             waterDetected:
               row.water_detected === true ? 1 : 0
           };
@@ -1503,6 +1535,50 @@
     iaqMin,
     iaqMax
   );
+
+        const validCo2Values = rows
+          .map(row => row.co2)
+          .filter(value => value !== null);
+
+        let co2Min;
+        let co2Max;
+
+        if (validCo2Values.length > 0) {
+          const lowestCo2 = Math.min(...validCo2Values);
+          const highestCo2 = Math.max(...validCo2Values);
+
+          co2Min = Math.max(
+            0,
+            Math.floor(lowestCo2 / 50) * 50 - 50
+          );
+
+          co2Max =
+            Math.ceil(highestCo2 / 50) * 50 + 50;
+
+          if (co2Max - co2Min < 200) {
+            const center = (co2Min + co2Max) / 2;
+            co2Min = Math.max(0, Math.floor(center - 100));
+            co2Max = Math.ceil(center + 100);
+          }
+        }
+
+        co2Chart =
+          createOrUpdateChart(
+            co2Chart,
+            "co2Chart",
+            labels,
+            [
+              dataset(
+                "CO₂-ekvivalent",
+                rows.map(
+                  row => row.co2
+                )
+              )
+            ],
+            "ppm",
+            co2Min,
+            co2Max
+          );
 
 waterChart =
   createOrUpdateChart(
