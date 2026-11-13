@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Klinikens vattenlarm – Rum 1",
+  "short_name": "Vattenlarm",
+  "lang": "sv",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "description": "Vattenlarm och luftkvalitet i tandläkarklinikens rum 1. Internetanslutning krävs.",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
