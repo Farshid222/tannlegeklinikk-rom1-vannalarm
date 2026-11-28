@@ -227,9 +227,41 @@
       }
     }
   </style>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vattenlarm">
+  <script src="app.js" defer></script>
+  <style>
+    [hidden] { display: none !important; }
+    .app-panel { margin: 0 0 24px; padding: 16px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); }
+    .app-panel p { line-height: 1.5; }
+    .app-panel button { margin: 0 0 12px; }
+    .app-panel summary { cursor: pointer; padding: 8px 0; }
+    .connection-notice { padding: 16px; border: 2px solid var(--warn); border-radius: 12px; color: var(--warn); margin-bottom: 20px; }
+    button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    @media (max-width: 600px) {
+      .statusBox { min-width: 0; width: 100%; }
+      .grid { grid-template-columns: minmax(0, 1fr); }
+      body { padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left)); }
+    }
+  </style>
 </head>
 
 <body>
+  <div id="connectionNotice" class="connection-notice" role="status" hidden>
+    Ingen nätanslutning. Aktuell larmstatus kan inte kontrolleras. Visade mätvärden kan vara gamla.
+  </div>
+  <aside class="app-panel" aria-label="Installera appen">
+    <button id="installApp" type="button">Installera appen</button>
+    <details id="installHelp">
+      <summary>Installationshjälp för iPhone och Android</summary>
+      <p><strong>iPhone:</strong> Öppna sidan i Safari, tryck på Dela och välj Lägg till på hemskärmen. Välj Öppna som webbapp om alternativet visas och tryck på Lägg till.</p>
+      <p><strong>Android:</strong> Öppna sidan i Chrome, tryck på Installera appen ovan eller välj Installera app / Lägg till på startskärmen i webbläsarens meny.</p>
+    </details>
+    <p>Internetanslutning krävs för aktuella mätvärden. Den här versionen skickar inga pushnotiser när appen är stängd.</p>
+  </aside>
   <div class="top">
     <div>
       <h1>Tandläkarklinik rum 1</h1>
@@ -1772,3 +1804,4 @@ statusElement.textContent =
   </script>
 </body>
 </html>
+
